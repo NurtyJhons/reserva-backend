@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registrar Usuário</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 400px; margin: auto; }
+    label { display: block; margin-top: 1rem; }
+    input, select, button { width: 100%; padding: 0.5rem; margin-top: 0.3rem; }
+    button { margin-top: 1.5rem; }
+    .message { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Registrar Usuário</h1>
+  <form id="register-form">
+    <label>
+      Usuário:
+      <input type="text" name="username" required />
+    </label>
+    <label>
+      Email:
+      <input type="email" name="email" required />
+    </label>
+    <label>
+      Senha:
+      <input type="password" name="password" required />
+    </label>
+    <label>
+      Telefone:
+      <input type="text" name="phone" required />
+    </label>
+    <label>
+      CPF:
+      <input type="text" name="cpf" required />
+    </label>
+
+    <label>
+      Tipo de Usuário:
+      <select name="user_type" required>
+        <option value="customer">Cliente</option>
+        <option value="owner">Owner</option>
+      </select>
+    </label>
+    <button type="submit">Registrar</button>
+  </form>
+
+  <div class="message" id="message"></div>
+
+  <script>
+    const form = document.getElementById('register-form');
+    const messageEl = document.getElementById('message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      messageEl.textContent = '';
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch('http://localhost:8000/api/auth/register/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          messageEl.style.color = 'green';
+          messageEl.textContent = 'Usuário registrado com sucesso! Você pode agora fazer login.';
+          form.reset();
+        } else {
+          const errorData = await response.json();
+          messageEl.style.color = 'red';
+          messageEl.textContent = 'Erro: ' + JSON.stringify(errorData);
+        }
+      } catch (error) {
+        messageEl.style.color = 'red';
+        messageEl.textContent = 'Erro na conexão com o servidor.';
+      }
+    });
+  </script>
+</body>
+</html>

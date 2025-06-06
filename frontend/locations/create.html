@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cadastrar Local</title>
+  <style>
+    body { font-family: Arial; padding: 2rem; max-width: 600px; margin: auto; }
+    input, textarea, button { width: 100%; padding: 0.5rem; margin-top: 1rem; }
+    label { margin-top: 1rem; display: block; }
+  </style>
+</head>
+<body>
+  <h1>Cadastrar Novo Local</h1>
+  <form id="location-form">
+    <label>
+      Nome:
+      <input type="text" name="name" required />
+    </label>
+    <label>
+      Endereço:
+      <textarea name="address" required></textarea>
+    </label>
+    <label>
+      Descrição:
+      <textarea name="description" required></textarea>
+    </label>
+    <label>
+      Preço por hora (R$):
+      <input type="number" name="price_per_hour" step="0.01" required />
+    </label>
+    <label>
+      Início do expediente:
+      <input type="time" name="operating_hours_start" required />
+    </label>
+    <label>
+      Fim do expediente:
+      <input type="time" name="operating_hours_end" required />
+    </label>
+    <label>
+      Horas para cancelamento:
+      <input type="number" name="cancellation_hours" required />
+    </label>
+    <label>
+      Duração máxima (horas):
+      <input type="number" name="max_duration" required />
+    </label>
+    <button type="submit">Cadastrar</button>
+  </form>
+
+  <div id="message"></div>
+
+  <script>
+    const form = document.getElementById('location-form');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      const token = localStorage.getItem('access_token');
+
+      try {
+        const res = await fetch('http://localhost:8000/api/locations/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (res.ok) {
+          message.style.color = 'green';
+          message.textContent = 'Local cadastrado com sucesso!';
+          form.reset();
+        } else {
+          const err = await res.json();
+          message.style.color = 'red';
+          message.textContent = 'Erro: ' + JSON.stringify(err);
+        }
+      } catch (err) {
+        message.style.color = 'red';
+        message.textContent = 'Erro ao conectar ao servidor.';
+      }
+    });
+  </script>
+</body>
+</html>

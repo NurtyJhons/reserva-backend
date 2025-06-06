@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fazer Reserva</title>
+</head>
+<body>
+  <h2>Fazer Reserva</h2>
+
+  <form id="reservationForm">
+    <label for="location">Local:</label>
+    <select id="location" name="location" required></select>
+
+    <label for="date">Data:</label>
+    <input type="date" id="date" name="date" required />
+
+    <label for="start_time">Hora de Início:</label>
+    <input type="time" id="start_time" name="start_time" required />
+
+    <label for="end_time">Hora de Término:</label>
+    <input type="time" id="end_time" name="end_time" required />
+
+    <button type="submit">Reservar</button>
+  </form>
+
+  <div id="message"></div>
+
+  <script>
+
+    const API_BASE_URL = 'http://localhost:8000/api/';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = localStorage.getItem('access_token');
+
+      if (!token) {
+        alert('Você precisa estar logado para fazer uma reserva.');
+        window.location.href = '/frontend/login.html';
+        return;
+      }
+
+      const locationSelect = document.getElementById('location');
+      const response = await fetch(`${API_BASE_URL}locations/`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const locations = await response.json();
+
+      locations.forEach(loc => {
+        const option = document.createElement('option');
+        option.value = loc.id;
+        option.textContent = loc.name;
+        locationSelect.appendChild(option);
+      });
+
+      document.getElementById('reservationForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const data = {
+          location: parseInt(locationSelect.value),
+          date: document.getElementById('date').value,
+          start_time: document.getElementById('start_time').value,
+          end_time: document.getElementById('end_time').value
+        };
+
+        const res = await fetch(`${API_BASE_URL}reservations/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(data)
+        });
+
+        const msg = document.getElementById('message');
+        if (res.ok) {
+          msg.textContent = 'Reserva realizada com sucesso!';
+        } else {
+          const err = await res.json();
+          msg.textContent = 'Erro: ' + (err.detail || JSON.stringify(err));
+        }
+      });
+    });
+  </script>
+</body>
+</html>
