@@ -3,14 +3,125 @@
 <head>
   <meta charset="UTF-8" />
   <title>Fazer Reserva</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .cards-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      width: 250px;
+      padding: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      background-color: #f9f9f9;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+      border-color: #777;
+    }
+
+    .card.selected {
+      border: 2px solid #007BFF;
+      background-color: #e6f0ff;
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    form {
+      max-width: 400px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      box-sizing: border-box;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      animation: slideUp 0.4s ease-out;
+      position: relative;
+    }
+
+    .close {
+      color: #aaa;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
 </head>
 <body>
   <h2>Fazer Reserva</h2>
 
-  <form id="reservationForm">
-    <label for="location">Local:</label>
-    <select id="location" name="location" required></select>
+  <h3>Escolha um local:</h3>
+  <div id="locationCards" class="cards-container"></div>
+  <input type="hidden" id="location" name="location" required />
 
+  <form id="reservationForm">
     <label for="date">Data:</label>
     <input type="date" id="date" name="date" required />
 
@@ -20,13 +131,37 @@
     <label for="end_time">Hora de Término:</label>
     <input type="time" id="end_time" name="end_time" required />
 
+    <label for="payment_method">Método de Pagamento:</label>
+    <select id="payment_method" name="payment_method" required>
+      <option value="pix">PIX</option>
+      <option value="boleto">Boleto</option>
+      <option value="cartao">Cartão</option>
+    </select>
+
     <button type="submit">Reservar</button>
   </form>
 
   <div id="message"></div>
 
-  <script>
+  <!-- Modal -->
+  <div id="locationModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3 id="modalName"></h3>
+      <div style="position: relative; width: 100%; height: 200px; margin-bottom: 10px;">
+        <button id="prevImage" style="position: absolute; top: 50%; left: 5px; transform: translateY(-50%); z-index: 5;">&#10094;</button>
+        <img id="modalImage" src="" alt="" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;" />
+        <button id="nextImage" style="position: absolute; top: 50%; right: 5px; transform: translateY(-50%); z-index: 5;">&#10095;</button>
+      </div>
+      <p id="modalDescription"></p>
+      <p><strong>Preço por hora:</strong> R$ <span id="modalPrice"></span></p>
+      <p><strong>Endereço:</strong> <span id="modalAddress"></span></p>
+      <p><strong>Horários disponíveis (hoje):</strong></p>
+      <ul id="modalSlots"></ul>
+    </div>
+  </div>
 
+  <script>
     const API_BASE_URL = 'http://localhost:8000/api/';
 
     document.addEventListener('DOMContentLoaded', async () => {
@@ -38,44 +173,143 @@
         return;
       }
 
-      const locationSelect = document.getElementById('location');
-      const response = await fetch(`${API_BASE_URL}locations/`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      const locations = await response.json();
+      const cardsContainer = document.getElementById('locationCards');
+      const locationInput = document.getElementById('location');
+      const msg = document.getElementById('message');
+      let locationsMap = {};
 
-      locations.forEach(loc => {
-        const option = document.createElement('option');
-        option.value = loc.id;
-        option.textContent = loc.name;
-        locationSelect.appendChild(option);
-      });
+      // Modal handlers
+      const modal = document.getElementById('locationModal');
+      const closeBtn = document.querySelector('.close');
+      closeBtn.onclick = () => { modal.style.display = 'none'; };
+      window.onclick = (event) => {
+        if (event.target === modal) modal.style.display = 'none';
+      };
 
+      try {
+        const response = await fetch(`${API_BASE_URL}locations/`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        const locations = await response.json();
+
+        locations.forEach(loc => {
+          locationsMap[loc.id] = loc;
+
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <img src="${loc.image_url}" alt="${loc.name}" />
+            <h4>${loc.name}</h4>
+            <p>Preço por hora: R$ ${loc.price_per_hour !== null && loc.price_per_hour !== undefined ? Number(loc.price_per_hour).toFixed(2) : 'N/D'}</p>
+          `;
+
+          card.addEventListener('click', () => {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            locationInput.value = loc.id;
+
+            document.getElementById('modalName').textContent = loc.name;
+            document.getElementById('modalDescription').textContent = loc.description || 'Sem descrição disponível';
+            document.getElementById('modalPrice').textContent =
+              loc.price_per_hour !== null && loc.price_per_hour !== undefined
+                ? Number(loc.price_per_hour).toFixed(2) : 'N/D';
+            document.getElementById('modalAddress').textContent = loc.address || 'Endereço não informado';
+            
+            let currentImageIndex = 0;
+            let modalImages = loc.images && loc.images.length > 0 ? loc.images : [loc.image_url];
+
+            const modalImage = document.getElementById('modalImage');
+            const prevBtn = document.getElementById('prevImage');
+            const nextBtn = document.getElementById('nextImage');
+
+            function updateModalImage() {
+              modalImage.src = modalImages[currentImageIndex];
+            }
+
+            prevBtn.onclick = (e) => {
+              e.stopPropagation();
+              currentImageIndex = (currentImageIndex - 1 + modalImages.length) % modalImages.length;
+              updateModalImage();
+            };
+
+            nextBtn.onclick = (e) => {
+              e.stopPropagation();
+              currentImageIndex = (currentImageIndex + 1) % modalImages.length;
+              updateModalImage();
+            };
+            
+            currentImageIndex = 0;
+            updateModalImage();
+
+            const today = new Date().toISOString().split('T')[0];
+            fetch(`${API_BASE_URL}locations/${loc.id}/available-slots/?date=${today}`, {
+              headers: { 'Authorization': `Bearer ${token}` }
+            })
+              .then(r => r.json())
+              .then(slots => {
+                const slotsList = document.getElementById('modalSlots');
+                slotsList.innerHTML = '';
+                if (slots.length > 0) {
+                  slots.forEach(slot => {
+                    const li = document.createElement('li');
+                    li.textContent = slot;
+                    slotsList.appendChild(li);
+                  });
+                } else {
+                  slotsList.innerHTML = '<li>Nenhum horário disponível hoje.</li>';
+                }
+              });
+
+            modal.style.display = 'block';
+          });
+
+          cardsContainer.appendChild(card);
+        });
+      } catch (err) {
+        msg.style.color = 'red';
+        msg.textContent = 'Erro ao carregar locais.';
+      }
+
+      // Envio da reserva
       document.getElementById('reservationForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        if (!locationInput.value) {
+          msg.style.color = 'red';
+          msg.textContent = 'Selecione um local antes de continuar.';
+          return;
+        }
+
         const data = {
-          location: parseInt(locationSelect.value),
+          location: parseInt(locationInput.value),
           date: document.getElementById('date').value,
           start_time: document.getElementById('start_time').value,
-          end_time: document.getElementById('end_time').value
+          end_time: document.getElementById('end_time').value,
+          payment_method: document.getElementById('payment_method').value
         };
 
-        const res = await fetch(`${API_BASE_URL}reservations/`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify(data)
-        });
+        try {
+          const res = await fetch(`${API_BASE_URL}reservations/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(data)
+          });
 
-        const msg = document.getElementById('message');
-        if (res.ok) {
-          msg.textContent = 'Reserva realizada com sucesso!';
-        } else {
-          const err = await res.json();
-          msg.textContent = 'Erro: ' + (err.detail || JSON.stringify(err));
+          if (res.ok) {
+            msg.style.color = 'green';
+            msg.textContent = 'Reserva realizada com sucesso!';
+          } else {
+            const err = await res.json();
+            msg.style.color = 'red';
+            msg.textContent = 'Erro: ' + (err.detail || JSON.stringify(err));
+          }
+        } catch (err) {
+          msg.style.color = 'red';
+          msg.textContent = 'Erro ao enviar reserva.';
         }
       });
     });

@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User, Group
-from .models import UserProfile, Reservation, Location
+from .models import UserProfile, Reservation, Location, Payment, LocationImage
+from django.utils import timezone
+from datetime import timedelta
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -33,6 +35,12 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return user
 
 class LocationSerializer(serializers.ModelSerializer):
+
+    image_url = serializers.SerializerMethodField()
+
+    def get_images(self, obj):
+        return [img.image_url for img in obj.images.all()]
+    
     class Meta:
         model = Location
         fields = [
@@ -47,10 +55,56 @@ class LocationSerializer(serializers.ModelSerializer):
             'max_duration',
             'is_active',
             'created_at',
-            'owner'
+            'owner',
+            'images',
+            'image_url'
         ]
         read_only_fields = ['owner', 'id', 'is_active', 'created_at']
 
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        first_image = obj.images.first()
+        if first_image and hasattr(first_image.image, 'url'):
+            return request.build_absolute_uri(first_image.image.url)
+        return None
+    
+class LocationImageSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = LocationImage
+        fields = ['id', 'image', 'image_url', 'uploaded_at']
+
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.image and hasattr(obj.image, 'url'):
+            return request.build_absolute_uri(obj.image.url)
+        return None
+    
+class LocationCreateSerializer(serializers.ModelSerializer):
+    images = serializers.ListField(
+        child=serializers.ImageField(),
+        write_only=True
+    )
+
+    class Meta:
+        model = Location
+        fields = [
+            'name', 'description', 'address', 'price_per_hour',
+            'operating_hours_start', 'operating_hours_end',
+            'cancellation_hours', 'max_duration', 'images'
+        ]
+
+    def create(self, validated_data):
+        images = validated_data.pop('images')
+        owner = self.context['request'].user
+        location = Location.objects.create(owner=owner, **validated_data)
+
+        for image in images:
+            LocationImage.objects.create(location=location, image=image)
+
+        return location
+    
 class ReservationSerializer(serializers.ModelSerializer):
     location_name = serializers.CharField(source='location.name', read_only=True)
 
@@ -69,9 +123,12 @@ class ReservationSerializer(serializers.ModelSerializer):
         ]
 
 class ReservationCreateSerializer(serializers.ModelSerializer):
+    payment_method = serializers.ChoiceField(choices=Payment.PaymentMethod.choices, write_only=True)
+    pagamento_status = serializers.ChoiceField(choices=Payment.PaymentStatus.choices, write_only=True, required=False)
+
     class Meta:
         model = Reservation
-        fields = ['location', 'date', 'start_time', 'end_time']
+        fields = ['location', 'date', 'start_time', 'end_time', 'payment_method', 'pagamento_status']
 
     def validate(self, data):
         from datetime import datetime, timedelta
@@ -81,6 +138,9 @@ class ReservationCreateSerializer(serializers.ModelSerializer):
         date = data['date']
         start_time = data['start_time']
         end_time = data['end_time']
+
+        if start_time >= end_time:
+            raise serializers.ValidationError("O horário de início deve ser anterior ao de término.")
 
         # 🔸 Verifica se horário está dentro do funcionamento do local
         if start_time < location.operating_hours_start or end_time > location.operating_hours_end:
@@ -112,5 +172,28 @@ class ReservationCreateSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        validated_data['user'] = self.context['request'].user
-        return super().create(validated_data)
+        user = self.context['request'].user
+        payment_method = validated_data.pop('payment_method')
+        pagamento_status = validated_data.pop('pagamento_status', Payment.PaymentStatus.PENDENTE)
+
+        reserva = Reservation.objects.create(user=user, status=Reservation.Status.PENDENTE, **validated_data)
+
+        valor = reserva.location.price_per_hour * ((reserva.end_time.hour - reserva.start_time.hour))
+        pagamento = Payment.objects.create(
+            reservation=reserva,
+            method=payment_method,
+            status=pagamento_status,
+            valor=valor
+        )
+
+        if pagamento.status == Payment.PaymentStatus.PAGO:
+            reserva.status = Reservation.Status.CONFIRMADA
+            reserva.save()
+
+        return reserva
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = '__all__'
+        read_only_fields = ['status', 'criado_em', 'atualizado_em']

@@ -1,14 +1,16 @@
-from rest_framework import generics, viewsets, status
-from .serializers import UserRegistrationSerializer, LocationSerializer
+from rest_framework import generics, viewsets, status, permissions
+from .serializers import UserRegistrationSerializer, LocationSerializer, LocationCreateSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
-from .models import Location, Reservation
+from .models import Location, Reservation, Payment, LocationImage
 from .permissions import IsOwnerOrReadOnly, IsReservationOwnerOrReadOnly, IsOwner
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from .serializers import ReservationSerializer, ReservationCreateSerializer
+from .serializers import ReservationSerializer, ReservationCreateSerializer, PaymentSerializer, LocationImageSerializer
 from rest_framework.views import APIView
-from datetime import date
+from django.utils.timezone import now, make_aware
+from datetime import date, datetime, timedelta
 from django.db.models import Count
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = UserRegistrationSerializer
@@ -16,20 +18,44 @@ class RegisterView(generics.CreateAPIView):
 
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.filter(is_active=True)
-    serializer_class = LocationSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return LocationCreateSerializer
+        return LocationSerializer
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save()
 
     def get_queryset(self):
         if self.request.user.is_authenticated and self.request.user.groups.filter(name='owners').exists():
             return Location.objects.filter(owner=self.request.user)
         return Location.objects.filter(is_active=True)
+    
+class LocationImageUploadView(generics.CreateAPIView):
+    serializer_class = LocationImageSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
+
+    def perform_create(self, serializer):
+        location_id = self.request.data.get('location')
+        location = Location.objects.get(id=location_id, owner=self.request.user)
+        serializer.save(location=location)
+
+class LocationImageDeleteView(generics.DestroyAPIView):
+    queryset = LocationImage.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # Garante que o owner só delete imagens dos seus próprios locais
+        return LocationImage.objects.filter(location__owner=self.request.user)
 
 class ReservationViewSet(viewsets.ModelViewSet):
     queryset = Reservation.objects.all()
     permission_classes = [IsAuthenticated, IsReservationOwnerOrReadOnly]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def get_queryset(self):
         user = self.request.user
@@ -45,8 +71,8 @@ class ReservationViewSet(viewsets.ModelViewSet):
             return ReservationCreateSerializer
         return ReservationSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    # def perform_create(self, serializer):
+    #    serializer.save(user=self.request.user)
 
     @action(detail=True, methods=['patch'], url_path='cancel')
     def cancel_reservation(self, request, pk=None):
@@ -57,13 +83,33 @@ class ReservationViewSet(viewsets.ModelViewSet):
 
         if not reservation.can_cancel():
             return Response({"detail": "Prazo para cancelamento expirado."}, status=400)
-
+        
+        # Atualiza status da reserva
         reservation.status = 'cancelled'
-        from django.utils.timezone import now
         reservation.cancelled_at = now()
         reservation.save()
 
-        return Response({"detail": "Reserva cancelada com sucesso."})
+        try:
+            payment = reservation.payment
+        except Payment.DoesNotExist:
+            payment = None
+
+        if payment and payment.status == 'pago':
+            # Constrói datetime da reserva
+            inicio_reserva = datetime.combine(reservation.date, reservation.start_time)
+            inicio_reserva = make_aware(inicio_reserva)
+
+            # Se ainda faltam mais de 24h, reembolsa
+            if inicio_reserva - now() >= timedelta(hours=24):
+                payment.status = 'reembolsado'
+                payment.reembolsado_em = now()
+                payment.save()
+
+                return Response({
+                    "detail": "Reserva cancelada e reembolso realizado com sucesso."
+                })
+
+        return Response({"detail": "Reserva cancelada com sucesso. Sem reembolso por estar fora do prazo."})
 
 class OwnerDashboardView(APIView):
     permission_classes = [IsAuthenticated, IsOwner]
@@ -107,3 +153,8 @@ class UserTypeView(APIView):
     def get(self, request):
         groups = request.user.groups.values_list('name', flat=True)
         return Response({"groups": list(groups)})
+
+class PaymentCreateView(generics.CreateAPIView):
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
+    permission_classes = [permissions.IsAuthenticated, JSONParser]

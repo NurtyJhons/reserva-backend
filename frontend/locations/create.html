@@ -7,11 +7,12 @@
     body { font-family: Arial; padding: 2rem; max-width: 600px; margin: auto; }
     input, textarea, button { width: 100%; padding: 0.5rem; margin-top: 1rem; }
     label { margin-top: 1rem; display: block; }
+    #message { margin-top: 1rem; font-weight: bold; }
   </style>
 </head>
 <body>
   <h1>Cadastrar Novo Local</h1>
-  <form id="location-form">
+  <form id="location-form" enctype="multipart/form-data">
     <label>
       Nome:
       <input type="text" name="name" required />
@@ -44,6 +45,10 @@
       Duração máxima (horas):
       <input type="number" name="max_duration" required />
     </label>
+    <label>
+      Imagens do local:
+      <input type="file" name="images" accept="image/*" multiple />
+    </label>
     <button type="submit">Cadastrar</button>
   </form>
 
@@ -55,30 +60,40 @@
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
+      message.textContent = '';
+      message.style.color = '';
 
       const token = localStorage.getItem('access_token');
+      if (!token) {
+        message.style.color = 'red';
+        message.textContent = 'Você precisa estar logado.';
+        return;
+      }
+
+      // Criar FormData com todos os campos e arquivos
+      const formData = new FormData(form);
 
       try {
         const res = await fetch('http://localhost:8000/api/locations/', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token,
+            // NÃO definir Content-Type aqui para permitir multipart/form-data correto
           },
-          body: JSON.stringify(data),
+          body: formData,
         });
 
-        if (res.ok) {
-          message.style.color = 'green';
-          message.textContent = 'Local cadastrado com sucesso!';
-          form.reset();
-        } else {
-          const err = await res.json();
+        if (!res.ok) {
+          const errorData = await res.json();
           message.style.color = 'red';
-          message.textContent = 'Erro: ' + JSON.stringify(err);
+          message.textContent = 'Erro ao cadastrar local: ' + JSON.stringify(errorData);
+          return;
         }
+
+        message.style.color = 'green';
+        message.textContent = 'Local cadastrado com sucesso!';
+        form.reset();
+
       } catch (err) {
         message.style.color = 'red';
         message.textContent = 'Erro ao conectar ao servidor.';
