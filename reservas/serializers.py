@@ -36,10 +36,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 class LocationSerializer(serializers.ModelSerializer):
 
-    image_url = serializers.SerializerMethodField()
+    images = serializers.SerializerMethodField()
 
     def get_images(self, obj):
-        return [img.image_url for img in obj.images.all()]
+        return [image.image_url for image in obj.images.all()]
     
     class Meta:
         model = Location
@@ -57,16 +57,16 @@ class LocationSerializer(serializers.ModelSerializer):
             'created_at',
             'owner',
             'images',
-            'image_url'
         ]
         read_only_fields = ['owner', 'id', 'is_active', 'created_at']
 
-    def get_image_url(self, obj):
+    def get_images(self, obj):
         request = self.context.get('request')
-        first_image = obj.images.first()
-        if first_image and hasattr(first_image.image, 'url'):
-            return request.build_absolute_uri(first_image.image.url)
-        return None
+        return [
+            request.build_absolute_uri(image.image.url)
+            for image in obj.images.all()
+            if image.image
+        ]
     
 class LocationImageSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()

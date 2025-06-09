@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from .serializers import ReservationSerializer, ReservationCreateSerializer, PaymentSerializer, LocationImageSerializer
 from rest_framework.views import APIView
 from django.utils.timezone import now, make_aware
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, time
 from django.db.models import Count
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
@@ -33,6 +33,65 @@ class LocationViewSet(viewsets.ModelViewSet):
         if self.request.user.is_authenticated and self.request.user.groups.filter(name='owners').exists():
             return Location.objects.filter(owner=self.request.user)
         return Location.objects.filter(is_active=True)
+    
+    @action(detail=True, methods=['get'], url_path='available-slots')
+    def available_slots(self, request, pk=None): 
+        try:
+            location = self.get_object()
+        except Location.DoesNotExist:
+            return Response({"detail": "Local não encontrado."}, status=404)
+
+        date_str = request.query_params.get('date')
+        if not date_str:
+            return Response({"detail": "Data não fornecida."}, status=400)
+
+        try:
+            query_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+        except ValueError:
+            return Response({"detail": "Formato de data inválido. Use YYYY-MM-DD."}, status=400)
+        
+        # Buscar reservas ativas (confirmadas e pendentes) para o local e data específica
+        existing_reservations = Reservation.objects.filter(
+            location=location, 
+            date=query_date
+        ).exclude(status='cancelled')  # Exclui apenas as canceladas
+        
+        reserved_slots = set()
+        for res in existing_reservations:
+            # Marcar todos os horários entre start_time e end_time como ocupados
+            start_hour = res.start_time.hour
+            end_hour = res.end_time.hour
+            
+            # Importante: incluir TODAS as horas do período da reserva
+            # Se reserva é de 15:00 até 22:00, ocupar slots: 15, 16, 17, 18, 19, 20, 21
+            reserved_slots.update(range(start_hour, end_hour))
+        
+        # Considerar horário de funcionamento do local
+        start_operating = location.operating_hours_start.hour
+        end_operating = location.operating_hours_end.hour
+        
+        # Incluir a última hora se o local funciona até ela
+        # Ex: se funciona até 23:00, deve mostrar slot 23:00
+        # Ex: se funciona até 23:30, deve mostrar slot 23:00
+        if location.operating_hours_end.minute >= 0:
+            end_operating += 1
+        
+        # Gerar horários disponíveis dentro do horário de funcionamento
+        operating_slots = range(start_operating, end_operating)
+        available_slots = [f"{h:02d}:00" for h in operating_slots if h not in reserved_slots]
+
+        # Debug: adicionar informações úteis na resposta
+        debug_info = {
+            "total_reservations": len(existing_reservations),
+            "reserved_hours": sorted(list(reserved_slots)),
+            "operating_range": f"{start_operating}:00 - {end_operating-1}:00"
+        }
+
+        return Response({
+            "available_slots": available_slots,
+            "debug": debug_info,  # Remover depois dos testes
+            "message": "Nenhum horário disponível hoje." if not available_slots else f"{len(available_slots)} horários disponíveis."
+        })
     
 class LocationImageUploadView(generics.CreateAPIView):
     serializer_class = LocationImageSerializer
@@ -70,9 +129,6 @@ class ReservationViewSet(viewsets.ModelViewSet):
         if self.action == 'create':
             return ReservationCreateSerializer
         return ReservationSerializer
-
-    # def perform_create(self, serializer):
-    #    serializer.save(user=self.request.user)
 
     @action(detail=True, methods=['patch'], url_path='cancel')
     def cancel_reservation(self, request, pk=None):
