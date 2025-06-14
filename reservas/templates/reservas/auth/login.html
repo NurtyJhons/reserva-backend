@@ -11,6 +11,20 @@
     input, button { width: 100%; padding: 0.5rem; margin-top: 0.3rem; }
     button { margin-top: 1.5rem; }
     .message { margin-top: 1rem; }
+    .switch-auth {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+    .switch-auth a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .switch-auth a:hover {
+      text-decoration: underline;
+    }
+
   </style>
 </head>
 <body>
@@ -28,6 +42,11 @@
   </form>
 
   <div class="message" id="message"></div>
+
+  <p class="switch-auth">
+    Ainda não tem uma conta? <a href="{% url 'register' %}">Cadastre-se</a>
+  </p>
+
 
   <script src="{% static 'reservas/js/login.js' %}"></script>
 

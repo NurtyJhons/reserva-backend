@@ -107,7 +107,10 @@ class LocationCreateSerializer(serializers.ModelSerializer):
     
 class ReservationSerializer(serializers.ModelSerializer):
     location_name = serializers.CharField(source='location.name', read_only=True)
+    location_address = serializers.CharField(source='location.address', read_only=True)
+    location_description = serializers.CharField(source='location.description', read_only=True)
     local_cancelado = serializers.SerializerMethodField()
+    location_images = serializers.SerializerMethodField()
 
     class Meta:
         model = Reservation
@@ -115,6 +118,8 @@ class ReservationSerializer(serializers.ModelSerializer):
             'id',
             'location',
             'location_name',
+            'location_address',
+            'location_description',
             'date',
             'start_time',
             'end_time',
@@ -122,10 +127,14 @@ class ReservationSerializer(serializers.ModelSerializer):
             'cancelled_at',
             'created_at',
             'local_cancelado',
+            'location_images',
         ]
 
     def get_local_cancelado(self, obj):
         return not obj.location.is_active
+    
+    def get_location_images(self, obj):
+        return [img.image.url for img in obj.location.images.all()]
 
 class ReservationCreateSerializer(serializers.ModelSerializer):
     payment_method = serializers.ChoiceField(choices=Payment.PaymentMethod.choices, write_only=True)

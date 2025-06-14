@@ -200,11 +200,28 @@
         #logoutButton:hover {
             background-color: #c82333;
         }
+
+        .nav-button {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 4px;
+            margin: 10px 0 20px;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+        }
+        .nav-button:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
 
     <button id="logoutButton">Sair</button>
+
+    <a href="{% url 'reservation-list' %}" class="nav-button">Veja suas reservas</a>
 
     <h2>Fazer Reserva</h2>
 

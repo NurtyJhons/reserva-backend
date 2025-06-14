@@ -11,6 +11,20 @@
     input, select, button { width: 100%; padding: 0.5rem; margin-top: 0.3rem; }
     button { margin-top: 1.5rem; }
     .message { margin-top: 1rem; }
+    .switch-auth {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+    .switch-auth a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+  }
+    .switch-auth a:hover {
+      text-decoration: underline;
+    }
+
   </style>
 </head>
 <body>
@@ -46,6 +60,10 @@
     </label>
     <button type="submit">Registrar</button>
   </form>
+
+  <p class="switch-auth">
+    Já tem uma conta? <a href="{% url 'login' %}">Faça login</a>
+  </p>
 
   <div class="message" id="message"></div>
 

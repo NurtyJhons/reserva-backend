@@ -1,4 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Botão de logout
+  const logoutButton = document.getElementById('logoutButton');
+  if (logoutButton) {
+    logoutButton.addEventListener('click', () => {
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      window.location.href = '/login/';
+    });
+  }
+
+  // Proteção de acesso
+  const token = localStorage.getItem('access_token');
+  if (!token) {
+    alert("Você precisa estar logado.");
+    window.location.href = "/login/";
+    return;
+  }
+
+  // Formulário
   const form = document.getElementById('location-form');
   const message = document.getElementById('message');
 
@@ -7,23 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
     message.textContent = '';
     message.style.color = '';
 
-    const token = localStorage.getItem('access_token');
-    if (!token) {
-      message.style.color = 'red';
-      message.textContent = 'Você precisa estar logado.';
-      window.location.href = "/login/";  // redireciona para login se necessário
-      return;
-    }
-
-    const logoutButton = document.getElementById('logoutButton');
-    if (logoutButton) {
-      logoutButton.addEventListener('click', () => {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-        window.location.href = '/login/';
-      });
-    }
-
     const formData = new FormData(form);
 
     try {
@@ -31,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + token,
-          // NÃO defina Content-Type! O browser define automaticamente para multipart/form-data
         },
         body: formData,
       });

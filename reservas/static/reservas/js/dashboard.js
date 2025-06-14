@@ -1,12 +1,5 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  const token = localStorage.getItem("access_token");
-
-  if (!token) {
-    alert("Você precisa estar logado.");
-    window.location.href = "/login/";
-    return;
-  }
-
+// Executa isoladamente no carregamento
+document.addEventListener('DOMContentLoaded', () => {
   const logoutButton = document.getElementById('logoutButton');
   if (logoutButton) {
     logoutButton.addEventListener('click', () => {
@@ -14,6 +7,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       localStorage.removeItem('refresh_token');
       window.location.href = '/login/';
     });
+  }
+});
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const token = localStorage.getItem('access_token');
+
+  if (!token) {
+    alert('Você precisa estar logado para fazer uma reserva.');
+    window.location.href = '/login/';
+    return;
   }
 
   try {
