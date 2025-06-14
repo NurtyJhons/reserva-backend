@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 400px; margin: auto; }
+    label { display: block; margin-top: 1rem; }
+    input, button { width: 100%; padding: 0.5rem; margin-top: 0.3rem; }
+    button { margin-top: 1.5rem; }
+    .message { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Login</h1>
+  <form id="login-form">
+    <label>
+      Usuário:
+      <input type="text" name="username" required />
+    </label>
+    <label>
+      Senha:
+      <input type="password" name="password" required />
+    </label>
+    <button type="submit">Entrar</button>
+  </form>
+
+  <div class="message" id="message"></div>
+
+  <script src="{% static 'reservas/js/login.js' %}"></script>
+
+  <body data-owner-dashboard-url="{% url 'dashboard' %}" data-customer-create-url="{% url 'reservation-create' %}">
+
+</body>
+</html>
+<!-- This is the login page for the application. It allows users to log in with their username and password.
+     Upon successful login, it stores the access and refresh tokens in local storage and redirects users based on their group type. -->

@@ -11,6 +11,30 @@ from django.utils.timezone import now, make_aware
 from datetime import date, datetime, timedelta, time
 from django.db.models import Count
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
+def login_view(request):
+    return render(request, 'reservas/auth/login.html')
+
+def register_view(request):
+    return render(request, 'reservas/auth/register.html')
+
+@login_required
+def owner_dashboard(request):
+    return render(request, 'reservas/dashboards/owner.html')  
+
+@login_required
+def create_location(request):
+    return render(request, 'reservas/locations/create.html')
+
+@login_required
+def create_reservation(request):
+    return render(request, 'reservas/reservations/create.html')
+
+@login_required
+def list_reservations(request):
+    return render(request, 'reservas/reservations/list.html')
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = UserRegistrationSerializer
@@ -92,6 +116,18 @@ class LocationViewSet(viewsets.ModelViewSet):
             "debug": debug_info,  # Remover depois dos testes
             "message": "Nenhum horário disponível hoje." if not available_slots else f"{len(available_slots)} horários disponíveis."
         })
+    
+    @action(detail=True, methods=['patch'], url_path='cancel')
+    def cancel_location(self, request, pk=None):
+        location = self.get_object()
+
+        # Apenas o proprietário pode cancelar
+        if location.owner != request.user:
+            return Response({'detail': 'Permissão negada.'}, status=403)
+
+        location.is_active = False
+        location.save()
+        return Response({'detail': 'Local cancelado com sucesso.'}, status=200)
     
 class LocationImageUploadView(generics.CreateAPIView):
     serializer_class = LocationImageSerializer

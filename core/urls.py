@@ -11,7 +11,8 @@ router.register(r'reservations', ReservationViewSet, basename='reservation')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('reservas.urls')),  
+    path('api/', include('reservas.api_urls')),     # apenas endpoints DRF
+    path('', include('reservas.urls')),              # templates do frontend
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

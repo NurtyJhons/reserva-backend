@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard do Owner</title>
+</head>
+<body>
+  <button id="logoutButton">Sair</button>
+
+  <div class="container">
+    <h1>Dashboard do Owner</h1>
+
+    <div id="stats">
+      <p><strong>Total de Locais:</strong> <span id="totalLocations">...</span></p>
+      <p><strong>Total de Reservas:</strong> <span id="totalReservations">...</span></p>
+      <p><strongReservas Futuras:</strong> <span id="upcomingReservations">...</span></p>
+    </div>
+
+    <h2>Reservas por Local</h2>
+    <ul id="reservationsPerLocation"></ul>
+
+    <h2>Cancelar um Local</h2>
+    <div id="cancelSection">
+      <label for="locationSelect">Selecione um local ativo:</label>
+      <select id="locationSelect">
+        <option value="">-- Escolha um local --</option>
+      </select>
+      <button id="cancelButton">Cancelar Local Selecionado</button>
+      <p id="cancelMessage"></p>
+    </div>
+
+
+    <a href="{% url 'location-create' %}">+ Cadastrar Novo Local</a>
+  </div>
+
+  <script src="{% static 'reservas/js/dashboard.js' %}"></script>
+
+</body>
+</html>
