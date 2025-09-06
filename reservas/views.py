@@ -43,6 +43,7 @@ class RegisterView(generics.CreateAPIView):
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.filter(is_active=True)
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    serializer_class = LocationSerializer
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def get_serializer_class(self):

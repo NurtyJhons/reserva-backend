@@ -142,8 +142,12 @@ class ReservationCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Reservation
-        fields = ['location', 'date', 'start_time', 'end_time', 'payment_method', 'pagamento_status']
+        fields = ['id', 'location', 'date', 'start_time', 'end_time', 'payment_method', 'pagamento_status', 'status']
+        read_only_fields = ['id', 'status'] 
 
+    def to_representation(self, instance):
+        return ReservationSerializer(instance, context=self.context).data
+    
     def validate(self, data):
         from datetime import datetime, timedelta
 
