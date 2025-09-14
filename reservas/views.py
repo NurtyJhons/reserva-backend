@@ -97,7 +97,6 @@ class LocationViewSet(viewsets.ModelViewSet):
         
         # Incluir a última hora se o local funciona até ela
         # Ex: se funciona até 23:00, deve mostrar slot 23:00
-        # Ex: se funciona até 23:30, deve mostrar slot 23:00
         if location.operating_hours_end.minute >= 0:
             end_operating += 1
         
