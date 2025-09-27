@@ -1,0 +1,1432 @@
+[
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "auth",
+        "model": "permission"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "auth",
+        "model": "group"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "auth",
+        "model": "user"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "contenttypes",
+        "model": "contenttype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "sessions",
+        "model": "session"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "reservas",
+        "model": "userprofile"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "reservas",
+        "model": "location"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "reservas",
+        "model": "reservation"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "reservas",
+        "model": "payment"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "reservas",
+        "model": "locationimage"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "i4ilfrbxrfz53sg3eb9s28ht0nrtb91o",
+    "fields": {
+        "session_data": ".eJxVjEEOwiAQRe_C2hBgBiwu3fcMZGAmUjU0Ke3KeHdt0oVu_3vvv1Siba1p67KkidVFWXX63TKVh7Qd8J3abdZlbusyZb0r-qBdjzPL83q4fweVev3WQGdynqNn4eACQsYADj0PBoklSgQQGzMaGyJCEcjG8lCsKwiYi3p_ANC_N2Q:1uNH29:RFJZJcqRRTJKgWdiZC7-OHCc2mTLEpF3jkqiT07X8aw",
+        "expire_date": "2025-06-19T20:17:53.562Z"
+    }
+},
+{
+    "model": "reservas.locationimage",
+    "pk": 12,
+    "fields": {
+        "location": 14,
+        "image": "location_images/casadepraia3_HOHmDXM.jpg",
+        "uploaded_at": "2025-06-16T15:34:49.106Z"
+    }
+},
+{
+    "model": "reservas.locationimage",
+    "pk": 13,
+    "fields": {
+        "location": 14,
+        "image": "location_images/casadepraia2_9ezVpk8.jpg",
+        "uploaded_at": "2025-06-16T15:34:49.115Z"
+    }
+},
+{
+    "model": "reservas.locationimage",
+    "pk": 14,
+    "fields": {
+        "location": 14,
+        "image": "location_images/casadepraia_eomJJIX.jpg",
+        "uploaded_at": "2025-06-16T15:34:49.128Z"
+    }
+},
+{
+    "model": "reservas.locationimage",
+    "pk": 15,
+    "fields": {
+        "location": 15,
+        "image": "location_images/casadepraia3_MfbZBNc.jpg",
+        "uploaded_at": "2025-06-16T15:39:43.084Z"
+    }
+},
+{
+    "model": "reservas.locationimage",
+    "pk": 16,
+    "fields": {
+        "location": 15,
+        "image": "location_images/casadepraia2_oRzyWMG.jpg",
+        "uploaded_at": "2025-06-16T15:39:43.094Z"
+    }
+},
+{
+    "model": "reservas.locationimage",
+    "pk": 17,
+    "fields": {
+        "location": 15,
+        "image": "location_images/casadepraia_7sme7zH.jpg",
+        "uploaded_at": "2025-06-16T15:39:43.106Z"
+    }
+},
+{
+    "model": "reservas.locationimage",
+    "pk": 18,
+    "fields": {
+        "location": 16,
+        "image": "location_images/teste.jpg",
+        "uploaded_at": "2025-09-07T22:20:39.755Z"
+    }
+},
+{
+    "model": "reservas.locationimage",
+    "pk": 19,
+    "fields": {
+        "location": 17,
+        "image": "location_images/teste_E6zYHml.jpg",
+        "uploaded_at": "2025-09-08T12:32:14.518Z"
+    }
+},
+{
+    "model": "reservas.locationimage",
+    "pk": 20,
+    "fields": {
+        "location": 18,
+        "image": "location_images/33.jpg",
+        "uploaded_at": "2025-09-08T15:09:39.972Z"
+    }
+},
+{
+    "model": "reservas.locationimage",
+    "pk": 21,
+    "fields": {
+        "location": 19,
+        "image": "location_images/34.jpg",
+        "uploaded_at": "2025-09-15T13:41:21.302Z"
+    }
+},
+{
+    "model": "reservas.locationimage",
+    "pk": 22,
+    "fields": {
+        "location": 19,
+        "image": "location_images/35.jpg",
+        "uploaded_at": "2025-09-15T13:41:21.316Z"
+    }
+},
+{
+    "model": "reservas.locationimage",
+    "pk": 23,
+    "fields": {
+        "location": 19,
+        "image": "location_images/36.jpg",
+        "uploaded_at": "2025-09-15T13:41:21.329Z"
+    }
+},
+{
+    "model": "reservas.locationimage",
+    "pk": 24,
+    "fields": {
+        "location": 20,
+        "image": "location_images/recreio2.jpeg",
+        "uploaded_at": "2025-09-22T00:11:52.442Z"
+    }
+},
+{
+    "model": "reservas.locationimage",
+    "pk": 25,
+    "fields": {
+        "location": 20,
+        "image": "location_images/recreio1.jpg",
+        "uploaded_at": "2025-09-22T00:11:52.456Z"
+    }
+},
+{
+    "model": "reservas.payment",
+    "pk": 5,
+    "fields": {
+        "reservation": 6,
+        "method": "pix",
+        "status": "pendente",
+        "valor": "180.00",
+        "criado_em": "2025-06-16T15:35:51.142Z",
+        "atualizado_em": "2025-06-16T15:35:51.142Z",
+        "reembolsado_em": null
+    }
+},
+{
+    "model": "reservas.payment",
+    "pk": 6,
+    "fields": {
+        "reservation": 7,
+        "method": "pix",
+        "status": "pendente",
+        "valor": "80.00",
+        "criado_em": "2025-09-07T22:37:30.002Z",
+        "atualizado_em": "2025-09-07T22:37:30.002Z",
+        "reembolsado_em": null
+    }
+},
+{
+    "model": "reservas.payment",
+    "pk": 7,
+    "fields": {
+        "reservation": 8,
+        "method": "pix",
+        "status": "pendente",
+        "valor": "120.00",
+        "criado_em": "2025-09-08T15:11:07.348Z",
+        "atualizado_em": "2025-09-08T15:11:07.348Z",
+        "reembolsado_em": null
+    }
+},
+{
+    "model": "reservas.payment",
+    "pk": 8,
+    "fields": {
+        "reservation": 9,
+        "method": "pix",
+        "status": "pendente",
+        "valor": "280.00",
+        "criado_em": "2025-09-15T13:49:09.006Z",
+        "atualizado_em": "2025-09-15T13:49:09.006Z",
+        "reembolsado_em": null
+    }
+},
+{
+    "model": "reservas.payment",
+    "pk": 9,
+    "fields": {
+        "reservation": 10,
+        "method": "boleto",
+        "status": "pendente",
+        "valor": "300.00",
+        "criado_em": "2025-09-22T00:13:34.007Z",
+        "atualizado_em": "2025-09-22T00:13:34.007Z",
+        "reembolsado_em": null
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "add_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "change_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "delete_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "view_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "add_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "change_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "delete_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "view_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "view_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "add_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "change_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "delete_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "view_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "add_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "change_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "delete_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "view_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "add_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "change_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "delete_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "view_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add user profile",
+        "content_type": [
+            "reservas",
+            "userprofile"
+        ],
+        "codename": "add_userprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change user profile",
+        "content_type": [
+            "reservas",
+            "userprofile"
+        ],
+        "codename": "change_userprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete user profile",
+        "content_type": [
+            "reservas",
+            "userprofile"
+        ],
+        "codename": "delete_userprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view user profile",
+        "content_type": [
+            "reservas",
+            "userprofile"
+        ],
+        "codename": "view_userprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add location",
+        "content_type": [
+            "reservas",
+            "location"
+        ],
+        "codename": "add_location"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change location",
+        "content_type": [
+            "reservas",
+            "location"
+        ],
+        "codename": "change_location"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete location",
+        "content_type": [
+            "reservas",
+            "location"
+        ],
+        "codename": "delete_location"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view location",
+        "content_type": [
+            "reservas",
+            "location"
+        ],
+        "codename": "view_location"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add reservation",
+        "content_type": [
+            "reservas",
+            "reservation"
+        ],
+        "codename": "add_reservation"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change reservation",
+        "content_type": [
+            "reservas",
+            "reservation"
+        ],
+        "codename": "change_reservation"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete reservation",
+        "content_type": [
+            "reservas",
+            "reservation"
+        ],
+        "codename": "delete_reservation"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view reservation",
+        "content_type": [
+            "reservas",
+            "reservation"
+        ],
+        "codename": "view_reservation"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add payment",
+        "content_type": [
+            "reservas",
+            "payment"
+        ],
+        "codename": "add_payment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change payment",
+        "content_type": [
+            "reservas",
+            "payment"
+        ],
+        "codename": "change_payment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete payment",
+        "content_type": [
+            "reservas",
+            "payment"
+        ],
+        "codename": "delete_payment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view payment",
+        "content_type": [
+            "reservas",
+            "payment"
+        ],
+        "codename": "view_payment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add location image",
+        "content_type": [
+            "reservas",
+            "locationimage"
+        ],
+        "codename": "add_locationimage"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change location image",
+        "content_type": [
+            "reservas",
+            "locationimage"
+        ],
+        "codename": "change_locationimage"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete location image",
+        "content_type": [
+            "reservas",
+            "locationimage"
+        ],
+        "codename": "delete_locationimage"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view location image",
+        "content_type": [
+            "reservas",
+            "locationimage"
+        ],
+        "codename": "view_locationimage"
+    }
+},
+{
+    "model": "auth.group",
+    "fields": {
+        "name": "customers",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "fields": {
+        "name": "owners",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$0vnCtMjBRDxR9rr8IIGYRe$xDW94+ZApfd0OEU/t6fr3/AyGcdGyqgxYd4W1L601AI=",
+        "last_login": "2025-06-05T20:17:53.555Z",
+        "is_superuser": true,
+        "username": "Joao",
+        "first_name": "",
+        "last_name": "",
+        "email": "joaovitortargueta@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-06-05T01:33:33.414Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$SExAOnGSoV4LPsme0kCyJm$hO7UCua0nmU6VjxSnXyeqw+SVQxnVeqx0NR+sH6Vh4k=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "Henrique",
+        "first_name": "",
+        "last_name": "",
+        "email": "Henrique@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-06-16T15:33:02.383Z",
+        "groups": [
+            [
+                "customers"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$P2aLgs3B5Ln15FAD5qV9M9$FFx2iDiHbkI5/eQDk29scUQ8eoPaSs6u1lskLnbN6Kk=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "Elena",
+        "first_name": "",
+        "last_name": "",
+        "email": "Elena@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-06-16T15:33:33.065Z",
+        "groups": [
+            [
+                "owners"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$i6xE1heZ7XDj8JA3BZ8wt3$x8W4RP6eSlBZaVAyUT4nBgaFAs4JPGFjL9k3Eb4w4OE=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "ronaldo",
+        "first_name": "ronaldo",
+        "last_name": "ronaldo",
+        "email": "ronaldo@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-09-06T23:57:27.567Z",
+        "groups": [
+            [
+                "customers"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$VnAgYSMs9BpkDzHxdF2aK2$/Ve+wXLrnFv8ZIxyyUKzuiQzcZ8R06WA3WmNA1NgR9M=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "yuno",
+        "first_name": "yuno",
+        "last_name": "silva",
+        "email": "yuno@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-09-07T00:28:50.108Z",
+        "groups": [
+            [
+                "customers"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$ZrZT3TDSoHPCmeoQ8J0thE$1QTQ8abd9d/rTrQHlDtinqYlxPrev/3ISZTzLGbhF9c=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "bica",
+        "first_name": "bica",
+        "last_name": "selva",
+        "email": "bica@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-09-07T00:30:16.862Z",
+        "groups": [
+            [
+                "customers"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$PfvNty39u2TofK5B0anJuT$Zmh2CAoVeq/yGbo9xLLW9IRhIAf46NmCnSB87DHuEB0=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "denis",
+        "first_name": "",
+        "last_name": "",
+        "email": "denis@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-09-07T21:51:20.401Z",
+        "groups": [
+            [
+                "owners"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$rDX5oCOf3Vv5rLTlcEeBEZ$p8TS4xw0jVJ25/oVo1NfQkF/dZRkc7hI0gI9Xb3g1Lo=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "joaovitor",
+        "first_name": "",
+        "last_name": "",
+        "email": "joaovitor@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-09-07T22:21:29.116Z",
+        "groups": [
+            [
+                "customers"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$Aij1LkiH8XxxWpCd2Jwnrr$gK2Ex5YGSGOxV/jP5RZU58IDcwGnrKhpflY8XAAc/aA=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "tulio",
+        "first_name": "tulio",
+        "last_name": "coelho",
+        "email": "tulio@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-09-21T20:21:36.755Z",
+        "groups": [
+            [
+                "owners"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "reservas.userprofile",
+    "pk": 9,
+    "fields": {
+        "user": [
+            "Henrique"
+        ],
+        "phone": "21994562784",
+        "cpf": "13544673702",
+        "created_at": "2025-06-16T15:33:03.173Z"
+    }
+},
+{
+    "model": "reservas.userprofile",
+    "pk": 10,
+    "fields": {
+        "user": [
+            "Elena"
+        ],
+        "phone": "21994568329",
+        "cpf": "03791908772",
+        "created_at": "2025-06-16T15:33:33.710Z"
+    }
+},
+{
+    "model": "reservas.userprofile",
+    "pk": 11,
+    "fields": {
+        "user": [
+            "ronaldo"
+        ],
+        "phone": "21944152983",
+        "cpf": "13544873609",
+        "created_at": "2025-09-06T23:57:28.220Z"
+    }
+},
+{
+    "model": "reservas.userprofile",
+    "pk": 12,
+    "fields": {
+        "user": [
+            "yuno"
+        ],
+        "phone": "2199431582",
+        "cpf": "13544978395",
+        "created_at": "2025-09-07T00:28:50.780Z"
+    }
+},
+{
+    "model": "reservas.userprofile",
+    "pk": 13,
+    "fields": {
+        "user": [
+            "bica"
+        ],
+        "phone": "21994156927",
+        "cpf": "13544767709",
+        "created_at": "2025-09-07T00:30:17.540Z"
+    }
+},
+{
+    "model": "reservas.userprofile",
+    "pk": 14,
+    "fields": {
+        "user": [
+            "denis"
+        ],
+        "phone": "2199452673",
+        "cpf": "13544787093",
+        "created_at": "2025-09-07T21:51:21.092Z"
+    }
+},
+{
+    "model": "reservas.userprofile",
+    "pk": 15,
+    "fields": {
+        "user": [
+            "joaovitor"
+        ],
+        "phone": "21994152847",
+        "cpf": "235557626493",
+        "created_at": "2025-09-07T22:21:29.819Z"
+    }
+},
+{
+    "model": "reservas.userprofile",
+    "pk": 16,
+    "fields": {
+        "user": [
+            "tulio"
+        ],
+        "phone": "2199864229",
+        "cpf": "13544467801",
+        "created_at": "2025-09-21T20:21:37.495Z"
+    }
+},
+{
+    "model": "reservas.location",
+    "pk": 14,
+    "fields": {
+        "owner": [
+            "Elena"
+        ],
+        "name": "Casa de praia",
+        "description": "Casa de praia em frente ao mar, melhor ponto do bairro",
+        "address": "Rua Siqueira Junior, 65, Copacabana",
+        "price_per_hour": "30.00",
+        "operating_hours_start": "00:00:00",
+        "operating_hours_end": "23:59:00",
+        "cancellation_hours": 24,
+        "max_duration": 168,
+        "is_active": false,
+        "created_at": "2025-06-16T15:34:49.085Z"
+    }
+},
+{
+    "model": "reservas.location",
+    "pk": 15,
+    "fields": {
+        "owner": [
+            "Elena"
+        ],
+        "name": "Casa de praia",
+        "description": "Casa de praia frente ao mar, melhor local do bairro",
+        "address": "Rua siqueira, 61, Copacabana",
+        "price_per_hour": "30.00",
+        "operating_hours_start": "00:00:00",
+        "operating_hours_end": "23:59:00",
+        "cancellation_hours": 24,
+        "max_duration": 168,
+        "is_active": true,
+        "created_at": "2025-06-16T15:39:43.068Z"
+    }
+},
+{
+    "model": "reservas.location",
+    "pk": 16,
+    "fields": {
+        "owner": [
+            "denis"
+        ],
+        "name": "teste",
+        "description": "barra da tijuca",
+        "address": "avenida das amercicas",
+        "price_per_hour": "40.00",
+        "operating_hours_start": "08:00:00",
+        "operating_hours_end": "18:00:00",
+        "cancellation_hours": 24,
+        "max_duration": 4,
+        "is_active": true,
+        "created_at": "2025-09-07T22:20:39.744Z"
+    }
+},
+{
+    "model": "reservas.location",
+    "pk": 17,
+    "fields": {
+        "owner": [
+            "denis"
+        ],
+        "name": "dsg",
+        "description": "rg",
+        "address": "sfgdg",
+        "price_per_hour": "35.00",
+        "operating_hours_start": "08:00:00",
+        "operating_hours_end": "18:00:00",
+        "cancellation_hours": 24,
+        "max_duration": 4,
+        "is_active": false,
+        "created_at": "2025-09-08T12:32:14.507Z"
+    }
+},
+{
+    "model": "reservas.location",
+    "pk": 18,
+    "fields": {
+        "owner": [
+            "denis"
+        ],
+        "name": "df",
+        "description": "gdrg",
+        "address": "sefgdr",
+        "price_per_hour": "56.00",
+        "operating_hours_start": "08:00:00",
+        "operating_hours_end": "18:00:00",
+        "cancellation_hours": 18,
+        "max_duration": 4,
+        "is_active": false,
+        "created_at": "2025-09-08T15:09:39.952Z"
+    }
+},
+{
+    "model": "reservas.location",
+    "pk": 19,
+    "fields": {
+        "owner": [
+            "denis"
+        ],
+        "name": "apartamento de luxo",
+        "description": "3 quartos, vista para praia",
+        "address": "Botafogo, Rio de Janeiro",
+        "price_per_hour": "40.00",
+        "operating_hours_start": "06:00:00",
+        "operating_hours_end": "23:00:00",
+        "cancellation_hours": 24,
+        "max_duration": 8,
+        "is_active": true,
+        "created_at": "2025-09-15T13:41:21.278Z"
+    }
+},
+{
+    "model": "reservas.location",
+    "pk": 20,
+    "fields": {
+        "owner": [
+            "tulio"
+        ],
+        "name": "apartamento recreio",
+        "description": "¾timos quartos e estadia segura e confortßvel",
+        "address": "Aveniida das americas 2660",
+        "price_per_hour": "15.00",
+        "operating_hours_start": "00:00:00",
+        "operating_hours_end": "23:57:00",
+        "cancellation_hours": 24,
+        "max_duration": 100,
+        "is_active": true,
+        "created_at": "2025-09-22T00:11:52.432Z"
+    }
+},
+{
+    "model": "reservas.reservation",
+    "pk": 6,
+    "fields": {
+        "user": [
+            "Henrique"
+        ],
+        "location": 14,
+        "date": "2025-06-16",
+        "start_time": "14:00:00",
+        "end_time": "20:00:00",
+        "cancelled_at": null,
+        "created_at": "2025-06-16T15:35:51.126Z",
+        "status": "pendente"
+    }
+},
+{
+    "model": "reservas.reservation",
+    "pk": 7,
+    "fields": {
+        "user": [
+            "joaovitor"
+        ],
+        "location": 16,
+        "date": "2025-09-09",
+        "start_time": "15:37:00",
+        "end_time": "17:37:00",
+        "cancelled_at": null,
+        "created_at": "2025-09-07T22:37:29.967Z",
+        "status": "pendente"
+    }
+},
+{
+    "model": "reservas.reservation",
+    "pk": 8,
+    "fields": {
+        "user": [
+            "joaovitor"
+        ],
+        "location": 15,
+        "date": "2025-09-10",
+        "start_time": "18:10:00",
+        "end_time": "22:10:00",
+        "cancelled_at": null,
+        "created_at": "2025-09-08T15:11:07.317Z",
+        "status": "pendente"
+    }
+},
+{
+    "model": "reservas.reservation",
+    "pk": 9,
+    "fields": {
+        "user": [
+            "joaovitor"
+        ],
+        "location": 19,
+        "date": "2025-09-15",
+        "start_time": "11:30:00",
+        "end_time": "18:00:00",
+        "cancelled_at": null,
+        "created_at": "2025-09-15T13:49:08.987Z",
+        "status": "pendente"
+    }
+},
+{
+    "model": "reservas.reservation",
+    "pk": 10,
+    "fields": {
+        "user": [
+            "joaovitor"
+        ],
+        "location": 20,
+        "date": "2025-09-22",
+        "start_time": "02:10:00",
+        "end_time": "22:00:00",
+        "cancelled_at": null,
+        "created_at": "2025-09-22T00:13:33.944Z",
+        "status": "pendente"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2025-06-06T23:36:16.173Z",
+        "user": [
+            "Joao"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "4",
+        "object_repr": "laiz",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2025-06-06T23:36:19.986Z",
+        "user": [
+            "Joao"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "2",
+        "object_repr": "fernando",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2025-06-06T23:36:24.111Z",
+        "user": [
+            "Joao"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "3",
+        "object_repr": "paulo",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2025-06-14T22:32:54.221Z",
+        "user": [
+            "Joao"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "6",
+        "object_repr": "daniel",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2025-06-14T22:32:58.964Z",
+        "user": [
+            "Joao"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "5",
+        "object_repr": "leonardo",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2025-06-14T23:22:20.989Z",
+        "user": [
+            "Joao"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "7",
+        "object_repr": "Roberto",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2025-06-14T23:22:24.650Z",
+        "user": [
+            "Joao"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "8",
+        "object_repr": "yago",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2025-06-16T15:12:23.402Z",
+        "user": [
+            "Joao"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "9",
+        "object_repr": "beatriz",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+        "action_time": "2025-06-16T15:12:27.662Z",
+        "user": [
+            "Joao"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "10",
+        "object_repr": "leandro",
+        "action_flag": 3,
+        "change_message": ""
+    }
+}
+]
